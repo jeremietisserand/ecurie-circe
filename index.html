@@ -15,7 +15,14 @@
 <header class="site-header" role="banner">
     <div class="container">
         <div class="brand">Ecurie de circé</div>
-        <nav class="site-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-label="Ouvrir le menu" aria-controls="primary-nav" aria-expanded="false">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+        <nav id="primary-nav" class="site-nav" aria-label="Primary">
             <a href="#home">Accueil</a>
             <a href="#presentation">Ecurie</a>
             <a href="#about">Stages</a>
@@ -87,4 +94,30 @@
     </div>
 </footer>
 </body>
+<script>
+  (function(){
+    const btn = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('primary-nav');
+    if(!btn || !nav) return;
+    function setOpen(open){
+      btn.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+    }
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+    // Close on link click (for single-page anchors)
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    // Close on Escape
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') setOpen(false);
+    });
+  })();
+  // Set year
+  (function(){
+    const y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+  })();
+</script>
 </html>
